@@ -85,15 +85,6 @@
 
   <?ignore
     =========================================================
-                     msg_converter
-    =========================================================
-  ?>  
-
-  	<node name="msg_converter" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen"/>
-
-
-  <?ignore
-    =========================================================
                            MSF
     =========================================================
   ?>
@@ -102,7 +93,7 @@
 
       <!-- inputs to msf --> 
       <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
-      <remap from="msf_updates/transform_input" to="/msg_converter/T_G_I" />
+      <remap from="msf_updates/pose_input" to="/pose_rovio/T_G_I" />
 
       <!-- msf parameters -->
 
