@@ -1,0 +1,143 @@
+<launch>
+
+  <?ignore
+    =========================================================
+                        RealSense
+    =========================================================
+  ?> 
+
+  <node pkg="maplab_realsense" type="zr300_node" name="zr300_node">
+
+    <param name="imu/enabled" value="true"/>
+    <param name="imu/imu_skip_first_n_gyro_measurements" value="100"/>
+
+    <param name="fisheye/enabled" value="true"/>
+    <param name="fisheye/width" value="640"/>
+    <param name="fisheye/height" value="480"/>
+    <param name="fisheye/fps" value="30"/>
+    <param name="fisheye/enable_auto_exposure" value="true"/>
+    <param name="fisheye/exposure_ms" value="25.0"/>
+    <param name="fisheye/gain" value="9.0"/>
+    <param name="fisheye/subsample_factor" value="1"/>
+
+    <param name="color/enabled" value="false"/>
+    <param name="color/width" value="640"/>
+    <param name="color/height" value="480"/>
+    <param name="color/fps" value="30"/>
+    <param name="color/subsample_factor" value="1"/>
+
+    <param name="depth/enabled" value="false"/>
+    <param name="depth/width" value="640"/>
+    <param name="depth/height" value="480"/>
+    <param name="depth/fps" value="30"/>
+    <param name="depth/subsample_factor" value="1"/>
+    <param name="depth/median_filter_enabled" value="false"/>
+    <!-- Only 3 or 5 are supported by opencv for this image type. -->
+    <param name="depth/median_filter_size" value="5"/>
+    <param name="depth/min_max_filter_enabled" value="false"/>
+    <param name="depth/min_max_filter_size" value="3"/>
+    <param name="depth/min_max_filter_threshold" value="0.1"/>
+
+    <param name="infrared/enabled" value="false"/>
+    <param name="infrared/subsample_factor" value="1"/>
+
+    <param name="pointcloud/enabled" value="false"/>
+  </node>
+
+  <?ignore
+    =========================================================
+                        ROVIOLI
+    ========================================================= 
+
+  <node name="maplab_rovio" pkg="arl_slam" type="brett_run_rovioli_live" />
+  
+  ?>
+
+  <?ignore
+    =========================================================
+                        MavRos
+    =========================================================
+  ?> 
+	<!-- vim: set ft=xml noet : -->
+	<!-- example launch script for PX4 based FCU's -->
+
+	<arg name="fcu_url" default="/dev/ttyACM0:921600" />
+	<arg name="gcs_url" default="" />
+	<arg name="tgt_system" default="1" />
+	<arg name="tgt_component" default="1" />
+	<arg name="log_output" default="screen" />
+	<!--arg name="fcu_protocol" default="v2.0" /-->
+	<!--arg name="respawn_mavros" default="false" /-->
+
+	<include file="$(find mavros)/launch/node.launch">
+
+		<arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
+		<arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
+
+		<arg name="fcu_url" value="$(arg fcu_url)" />
+		<arg name="gcs_url" value="$(arg gcs_url)" />
+		<arg name="tgt_system" value="$(arg tgt_system)" />
+		<arg name="tgt_component" value="$(arg tgt_component)" />
+		<arg name="log_output" value="$(arg log_output)" />
+		<!--arg name="fcu_protocol" value="$(arg fcu_protocol)" /-->
+		<!--arg name="respawn_mavros" default="$(arg respawn_mavros)" /-->
+	</include>
+
+  <?ignore
+    =========================================================
+                     msg_converter
+    =========================================================
+  ?>  
+
+  	<node name="msg_converter" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen"/>
+
+
+  <?ignore
+    =========================================================
+                           MSF
+    =========================================================
+  ?>
+
+    <node name="pose_sensor_rovio" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+
+      <!-- inputs to msf --> 
+      <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
+      <remap from="msf_updates/transform_input" to="/msg_converter/T_G_I" />
+
+      <!-- msf parameters -->
+
+      <rosparam file="$(find arl_slam)/resources/msf_parameters/msf_parameters_realsense_02.yaml"/>
+
+    </node>
+
+
+  <?ignore
+    =========================================================
+                        Nonlinear MPC
+    =========================================================
+  ?>    
+    <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
+    
+      <remap from="odometry" to="msf_core/odometry" />
+      <remap from="rc" to="mavros/rc/in" />
+
+      <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett.yaml" />
+      <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett.yaml"/>
+      <param name="use_rc_teleop" value="true"/>
+      <param name="autopilot_interface" value="mavros" />
+      <param name="verbose" value="true" />
+      <param name="reference_frame" value="world"/>
+
+	</node>
+
+
+  <?ignore
+    =========================================================
+                        Static Transform
+    =========================================================
+  ?> 
+
+    <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 1  /world /map 100"/>
+
+
+</launch>

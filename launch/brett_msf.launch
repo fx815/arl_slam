@@ -1,0 +1,30 @@
+<launch>
+
+  <?ignore
+    =========================================================
+                        msg_converter
+    =========================================================
+  ?>  
+
+  	<node name="msg_converter" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen"/>
+
+
+  <?ignore
+    =========================================================
+                        MSF
+    =========================================================
+  ?>
+
+    <node name="pose_sensor_rovio" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+
+      <!-- inputs to msf --> 
+      <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
+      <remap from="msf_updates/transform_input" to="/msg_converter/T_G_I" />
+
+      <!-- msf parameters -->
+
+      <rosparam file="/home/arl/maplab_ws/msf_parameters/msf_parameters_realsense_01.yaml"/>
+
+    </node>
+
+</launch>

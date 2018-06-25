@@ -1,0 +1,16 @@
+<launch>
+
+
+  <?ignore
+    =========================================================
+                   dummy_controller_node
+    =========================================================
+  ?>     
+    
+    <node pkg="mav_control_interface" type="mav_control_interface_test_node" name="test_lowlevel_flightmanager" output="screen">
+
+      <remap from="odometry" to="ground_truth/odometry" />
+
+    </node>
+
+</launch>

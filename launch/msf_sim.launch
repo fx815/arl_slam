@@ -1,0 +1,28 @@
+<launch>
+
+	<arg name="mav_name" default="firefly" />
+	<arg name="namespace" default="$(arg mav_name)"/>
+	<group ns="$(arg namespace)">
+
+	  <?ignore
+	    =========================================================
+	                           MSF
+	    =========================================================
+	  ?>
+
+	    <node name="pose_sensor" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+
+	      <!-- inputs to msf --> 
+
+	      <remap from="msf_core/imu_state_input" to="imu" />
+	      <remap from="msf_updates/transform_input" to="ground_truth/transform" />
+
+	      <!-- msf parameters -->
+
+	      <rosparam file="$(find arl_slam)/resources/msf_parameters/msf_parameters_realsense_02.yaml"/>
+
+	    </node>
+
+	</group>
+
+</launch>
