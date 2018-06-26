@@ -70,8 +70,8 @@
       <remap from="odometry" to="msf_core/odometry" />
       <remap from="rc" to="mavros/rc/in" />
 
-      <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_01.yaml" />
-      <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_01.yaml"/>
+      <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_02.yaml" />
+      <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_02.yaml"/>
       <param name="use_rc_teleop" value="true"/>
       <param name="autopilot_interface" value="mavros" />
       <param name="verbose" value="true" />
