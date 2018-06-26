@@ -93,7 +93,7 @@
 
       <!-- inputs to msf --> 
       <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
-      <remap from="msf_updates/pose_input" to="/pose_rovio/T_G_I" />
+      <remap from="msf_updates/pose_input" to="/maplab_rovio/T_G_I" />
 
       <!-- msf parameters -->
 
