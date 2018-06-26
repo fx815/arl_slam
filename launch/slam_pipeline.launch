@@ -97,7 +97,7 @@
 
       <!-- msf parameters -->
 
-      <rosparam file="$(find arl_slam)/resources/msf_parameters/msf_parameters_realsense_02.yaml"/>
+      <rosparam file="$(find arl_slam)/resources/msf_parameters/msf_parameters_realsense_new_realsense_mount.yaml"/>
 
     </node>
 
