@@ -94,9 +94,6 @@
     <!-- inputs to filter -->
     <remap from="input_imu" to="mavros/imu/data" />
 
-    <!--filter outputs -->
-    <remap from="output_imu" to="mavros_filtered/imu/data" />
-
   </node>
 
 
@@ -109,7 +106,7 @@
     <node name="pose_sensor_rovio" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
 
       <!-- inputs to msf --> 
-      <remap from="msf_core/imu_state_input" to="pixhawk/imu/data" />
+      <remap from="msf_core/imu_state_input" to="output_imu" />
       <remap from="msf_updates/pose_input" to="maplab_rovio/T_G_I" />
 
       <!-- msf parameters -->
@@ -128,6 +125,7 @@
     
       <remap from="odometry" to="msf_core/odometry" />
       <remap from="rc" to="mavros/rc/in" />
+      <remap from="mavros/imu/data" to="output_imu" />
 
       <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_02.yaml" />
       <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_02.yaml"/>
