@@ -8,7 +8,7 @@ IMU_PARAMETERS_ROVIO="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibrati
 REST=$@
 
 rosrun rovioli rovioli \
-  --rovio_enable_frame_visualization=true \
+  --rovio_enable_frame_visualization=false \
   --alsologtostderr=1 \
   --v=2 \
   --ncamera_calibration=$NCAMERA_CALIBRATION  \
