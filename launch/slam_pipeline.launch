@@ -85,6 +85,23 @@
 
   <?ignore
     =========================================================
+                     Butterworth Filter
+    =========================================================
+  ?>
+
+  <node name="butter_node" pkg="butter" type="butter_node" clear_params="true" output="screen">
+
+    <!-- inputs to filter -->
+    <remap from="input_imu" to="/mavros/imu/data" />
+
+    <!--filter outputs -->
+    <remap from="output_imu" to="/pixhawk/imu/data" />
+
+  </node>
+
+
+  <?ignore
+    =========================================================
                            MSF
     =========================================================
   ?>
@@ -92,7 +109,7 @@
     <node name="pose_sensor_rovio" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
 
       <!-- inputs to msf --> 
-      <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
+      <remap from="msf_core/imu_state_input" to="/pixhawk/imu/data" />
       <remap from="msf_updates/pose_input" to="/maplab_rovio/T_G_I" />
 
       <!-- msf parameters -->
