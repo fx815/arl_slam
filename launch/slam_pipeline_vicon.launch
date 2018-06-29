@@ -39,18 +39,31 @@
 
     <include file="$(find ros_vrpn_client)/launch/asl_vicon.launch" />
     
+  <?ignore
+    =========================================================
+                     Butterworth Filter
+    =========================================================
+  ?>
+
+  <node name="butter_node" pkg="butter" type="butter_node" clear_params="true" output="screen">
+
+    <!-- inputs to filter -->
+    <remap from="input_imu" to="mavros/imu/data" />
+
+  </node>
+  
   
 
   <?ignore 
     =========================================================
                            MSF
     =========================================================
-  
+  ?>
 
     <node name="pose_sensor_rovio" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
 
       <!-- inputs to msf --> 
-      <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
+      <remap from="msf_core/imu_state_input" to="output_imu" />
       <remap from="msf_updates/transform_input" to="/brett2/vrpn_client/raw_transform" />
 
       <!-- msf parameters -->
@@ -58,8 +71,6 @@
       <rosparam file="$(find arl_slam)/resources/msf_parameters/viconpos_sensor_fix.yaml"/>
 
     </node>
-    
-    ?>
 
   <?ignore
     =========================================================
@@ -70,6 +81,7 @@
     
       <remap from="odometry" to="msf_core/odometry" />
       <remap from="rc" to="mavros/rc/in" />
+      <remap from="mavros/imu/data" to="output_imu" />
 
       <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_02.yaml" />
       <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_02.yaml"/>
