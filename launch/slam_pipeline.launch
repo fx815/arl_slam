@@ -48,10 +48,10 @@
     =========================================================
                         ROVIOLI
     ========================================================= 
-
-  <node name="maplab_rovio" pkg="arl_slam" type="brett_run_rovioli_live" />
-  
   ?>
+
+  <!--node name="maplab_rovio" pkg="arl_slam" type="/brett_run_rovioli_live" /-->
+  
 
   <?ignore
     =========================================================

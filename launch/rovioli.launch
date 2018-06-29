@@ -1,0 +1,28 @@
+<launch>
+
+  <?ignore
+    =========================================================
+                        ROVIOLI
+    ========================================================= 
+  ?>
+
+  <!--node name="maplab_rovio" pkg="arl_slam" type="brett_run_rovioli_live" /-->
+
+  <node name="rovioli" pkg="rovioli" type="rovioli" output="screen" args="--alsologtostderr=1 --v=2 --rovio_enable_frame_visualization=true --rovio_enable_frame_visualization=false --ncamera_calibration=/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/ncamera-2018-05-11-15-05-18.yaml --imu_parameters_maplab=/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/imu-zr300-maplab.yaml --imu_parameters_rovio=/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/imu-zr300-rovio.yaml --datasource_type=rostopic --save_map_folder=1 --map_builder_save_image_as_resources=false --optimize_map_to_localization_map=false"> 
+
+  </node>
+  
+</launch>
+
+
+<?ignore
+  <node name="rovioli" pkg="rovioli" type="rovioli" output="screen">
+
+    <param name="rovio_enable_frame_visualization" value="false" />
+    <param name="alsologtostderr" value="1" />
+    <param name="v" value="2" />
+    <param name="ncamera_calibration" value="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/ncamera-2018-05-11-15-05-18.yaml" />
+
+  </node>#
+
+?>
