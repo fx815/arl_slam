@@ -34,15 +34,15 @@ r_roll  : 170.0
 r_pitch : 170.0
 r_thrust : 1.0
 
-roll_max: deg(25.0)
-pitch_max: deg(25.0)
+roll_max: 0.45
+pitch_max: 0.45
 thrust_min: 5.0
 thrust_max: 15.0
 
 K_yaw: 0.5
 
 Ki_xy: 0.2
-Ki_z: 0.3
+Ki_z: 0.2
 position_error_integration_limit: 2
 antiwindup_ball: 0.4
 
