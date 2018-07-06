@@ -1,0 +1,44 @@
+## Kalman Filter Parameters:
+KF_observer:
+  calibration_duration: 5 #sec
+  
+  #covariance of initial state
+  P0_position: 0.1
+  P0_velocity: 0.1
+  P0_attitude: 0.1
+  P0_angular_velocity: 0.1
+  P0_force: 0.1
+  P0_torque: 0.1
+  
+  #process noise
+  q_position: 0.01
+  q_velocity: 0.025
+  q_attitude: 0.015
+  q_angular_velocity: 0.02
+  q_force: 0.05
+  q_torque: 0.05
+  
+  #measurement noise
+  r_position: 0.0001
+  r_velocity: 0.00012
+  r_attitude: 0.001
+  
+  #limits
+  omega_limit :  [ 3.000000 ,3.000000 ,2.000000]
+  external_forces_limit :  [ 5.000000 ,5.000000 ,3.0000000]      #m/s^2
+  external_moments_limit :  [ 20.000000 ,20.000000 ,20.000000]  #rad/s^2
+
+  #model from system identification (2nd order attitude model)
+  drag_coefficients : [ 0.010000 , 0.010000 , 0]
+  #from vicon
+  roll_omega : 14.566
+  roll_gain : 1.024
+  roll_damping : 0.916
+  pitch_omega : 14.104
+  pitch_gain : 1.004
+  pitch_damping : 0.956
+  #from IMU
+  yaw_omega : 9.035 
+  yaw_gain : 1.002 
+  yaw_damping : 0.636 
+  
