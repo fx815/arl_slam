@@ -19,4 +19,3 @@ target_link_libraries(msg_converter_node ${catkin_LIBRARIES} msg_converter)
 
 add_executable(string_publisher_node src/string_publisher_node.cpp)
 target_link_libraries(string_publisher_node ${catkin_LIBRARIES} string_publisher)
-
