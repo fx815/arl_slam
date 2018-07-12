@@ -29,6 +29,7 @@ class AddOrientationOffset:
         self.i += 1
 
         if self.i == 1:
+            print ("add_orientation_offset initialized")
             q_in = [msg.pose.orientation.x,
                            msg.pose.orientation.y,
                            msg.pose.orientation.z,
