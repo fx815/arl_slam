@@ -26,9 +26,9 @@ class AddOrientationOffset:
 
     def pose_callback(self, msg):
 
-        i += 1
+        self.i += 1
 
-        if i == 1:
+        if self.i == 1:
             q_in = [msg.pose.pose.quaternion.x,
                            msg.pose.pose.quaternion.y,
                            msg.pose.pose.quaternion.z,
@@ -67,7 +67,7 @@ class AddOrientationOffset:
 
 if __name__ == '__main__':
     rospy.init_node('add_pose_offset')
-    
+
     # Go to class functions that do all the heavy lifting. Do error checking.
     try:
         add_orientation_offset = AddOrientationOffset()
