@@ -36,11 +36,11 @@ class AddOrientationOffset:
                            msg.pose.orientation.w]
 
             euler_init_rpy = tf.euler_from_quaternion(q_in)
-            self.euler_offset_rpy = -euler_init_rpy
-            #roll = -euler_offset_rpy[0]
-            #pitch = -euler_offset_rpy[1]
-            #yaw = -euler_offset_rpy[2]
-            euler_new = euler_in_rpy + self.euler_offset_rpy
+            roll = -euler_init_rpy[0]
+            pitch = -euler_init_rpy[1]
+            yaw = -euler_init_rpy[2]
+            self.euler_init_rpy_neg = [roll, pitch, yaw]
+            euler_new = euler_init_rpy + self.euler_init_rpy_neg
             q_new = tf.quaternion_from_euler(euler_new)
             #q_new = tf.quaternion_multiply(q_in,self.q_offset)
 
@@ -59,7 +59,7 @@ class AddOrientationOffset:
                            msg.pose.orientation.w]
 
             euler_in_rpy = tf.euler_from_quaternion(q_in)
-            euler_new = euler_in_rpy + self.euler_offset_rpy
+            euler_new = euler_in_rpy + self.euler_init_rpy_neg
             q_new = tf.quaternion_from_euler(euler_new)
 
             pose_out = msg
