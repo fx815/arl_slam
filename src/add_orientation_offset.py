@@ -29,10 +29,10 @@ class AddOrientationOffset:
         self.i += 1
 
         if self.i == 1:
-            q_in = [msg.pose.pose.quaternion.x,
-                           msg.pose.pose.quaternion.y,
-                           msg.pose.pose.quaternion.z,
-                           msg.pose.qpose.uaternion.w]
+            q_in = [msg.pose.orientation.x,
+                           msg.pose.orientation.y,
+                           msg.pose.orientation.z,
+                           msg.pose.orientation.w]
 
             euler_offset_rpy = tf.transformations.euler_from_quaternion(q_in)
             roll = -euler_offset_rpy[0]
@@ -42,26 +42,26 @@ class AddOrientationOffset:
             q_new = tf.quaternion_multiply(q_in,self.q_offset)
 
             pose_out = msg
-            pose_out.pose.pose.quaternion.x = q_new[0]
-            pose_out.pose.pose.quaternion.y = q_new[1]
-            pose_out.pose.pose.quaternion.z = q_new[2]
-            pose_out.pose.pose.quaternion.w = q_new[3]
+            pose_out.pose.orientation.x = q_new[0]
+            pose_out.pose.orientation.y = q_new[1]
+            pose_out.pose.orientation.z = q_new[2]
+            pose_out.pose.orientation.w = q_new[3]
 
             self.pub_pose_out.publish(pose_out) 
 
         else:
-            q_in = [msg.pose.pose.quaternion.x,
-                           msg.pose.pose.quaternion.y,
-                           msg.pose.pose.quaternion.z,
-                           msg.pose.qpose.uaternion.w]
+            q_in = [msg.pose.orientation.x,
+                           msg.pose.orientation.y,
+                           msg.pose.orientation.z,
+                           msg.pose.orientation.w]
 
             q_new = tf.quaternion_multiply(q_in,self.q_offset)
 
             pose_out = msg
-            pose_out.pose.pose.quaternion.x = q_new[0]
-            pose_out.pose.pose.quaternion.y = q_new[1]
-            pose_out.pose.pose.quaternion.z = q_new[2]
-            pose_out.pose.pose.quaternion.w = q_new[3]
+            pose_out.pose.orientation.x = q_new[0]
+            pose_out.pose.orientation.y = q_new[1]
+            pose_out.pose.orientation.z = q_new[2]
+            pose_out.pose.orientation.w = q_new[3]
 
             self.pub_pose_out.publish(pose_out) 
 
