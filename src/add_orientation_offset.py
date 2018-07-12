@@ -8,7 +8,7 @@
 #  Convention:   q_out =  q_in * q_offset
 
 import rospy
-from sensor_msgs.msg import Imu
+from geometry_msgs.msg import PoseStamped
 import tf.transformations as tf
 import math
 
@@ -16,42 +16,58 @@ import math
 class AddOrientationOffset:
     def __init__(self):
 
-        if rospy.has_param('~orientation_offset'):
-            # Orientation offset as quaterion q = [x,y,z,w].
-            self.orientation_offset = rospy.get_param('~orientation_offset')
-        else:
-            yaw_offset_deg = rospy.get_param('~yaw_offset_deg', 0.0)
-            self.orientation_offset = tf.quaternion_from_euler(0.0, 0.0, math.radians(yaw_offset_deg))
+        self.i = 0
 
-        rospy.Subscriber(rospy.get_name() + "/imu_in", Imu, self.imu_callback)
+        rospy.Subscriber('maplab_rovio/T_G_I', PoseStamped, self.pose_callback)
 
-        self.pub_imu_out = rospy.Publisher(rospy.get_name() + '/imu_out',
-                                           Imu, queue_size=10)
+        self.pub_pose_out = rospy.Publisher('maplab_rovio/T_G_I/Init',PoseStamped, queue_size=10)
 
         rospy.spin()
 
-    def imu_callback(self, msg):
+    def pose_callback(self, msg):
 
-        q_in = [msg.orientation.x,
-                msg.orientation.y,
-                msg.orientation.z,
-                msg.orientation.w]
+        i += 1
 
-        q_out = tf.quaternion_multiply(q_in, self.orientation_offset)
+        if i == 1:
+            q_in = [msg.pose.pose.quaternion.x,
+                           msg.pose.pose.quaternion.y,
+                           msg.pose.pose.quaternion.z,
+                           msg.pose.qpose.uaternion.w]
 
-        imu_out = msg
-        imu_out.orientation.x = q_out[0]
-        imu_out.orientation.y = q_out[1]
-        imu_out.orientation.z = q_out[2]
-        imu_out.orientation.w = q_out[3]
+            euler_offset_rpy = tf.transformations.euler_from_quaternion(q_in)
+            roll = -euler_offset_rpy[0]
+            pitch = -euler_offset_rpy[1]
+            yaw = -euler_offset_rpy[2]
+            self.q_offset = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
+            q_new = tf.quaternion_multiply(q_in,self.q_offset)
 
-        self.pub_imu_out.publish(imu_out)
+            pose_out = msg
+            pose_out.pose.pose.quaternion.x = q_new[0]
+            pose_out.pose.pose.quaternion.y = q_new[1]
+            pose_out.pose.pose.quaternion.z = q_new[2]
+            pose_out.pose.pose.quaternion.w = q_new[3]
 
+            self.pub_pose_out.publish(pose_out) 
+
+        else:
+            q_in = [msg.pose.pose.quaternion.x,
+                           msg.pose.pose.quaternion.y,
+                           msg.pose.pose.quaternion.z,
+                           msg.pose.qpose.uaternion.w]
+
+            q_new = tf.quaternion_multiply(q_in,self.q_offset)
+
+            pose_out = msg
+            pose_out.pose.pose.quaternion.x = q_new[0]
+            pose_out.pose.pose.quaternion.y = q_new[1]
+            pose_out.pose.pose.quaternion.z = q_new[2]
+            pose_out.pose.pose.quaternion.w = q_new[3]
+
+            self.pub_pose_out.publish(pose_out) 
 
 if __name__ == '__main__':
-    rospy.init_node('add_orientation_offset')
-    rospy.loginfo(rospy.get_name() + ' start')
-
+    rospy.init_node('add_pose_offset')
+    
     # Go to class functions that do all the heavy lifting. Do error checking.
     try:
         add_orientation_offset = AddOrientationOffset()
