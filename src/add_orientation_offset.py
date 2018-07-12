@@ -18,9 +18,9 @@ class AddOrientationOffset:
 
         self.i = 0
 
-        rospy.Subscriber('maplab_rovio/T_G_I', Odometry, self.pose_callback)
+        rospy.Subscriber('msf_core/odometry', Odometry, self.pose_callback)
 
-        self.pub_pose_out = rospy.Publisher('maplab_rovio/T_G_I/init',Odometry, queue_size=10)
+        self.pub_pose_out = rospy.Publisher('msf_core/odometry/corrected',Odometry, queue_size=10)
 
         rospy.spin()
 

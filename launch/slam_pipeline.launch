@@ -15,14 +15,6 @@
   ?>
 
   <!--node name="maplab_rovio" pkg="arl_slam" type="/brett_run_rovioli_live" /-->
-  
-  <?ignore
-    =========================================================
-                  ROVIOLI pose correction
-    ========================================================= 
-  ?>
-
-    <node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" />
 
   <?ignore
     =========================================================
@@ -90,6 +82,15 @@
     <node pkg="rosservice" type="rosservice" name="initialize" args="call --wait /pose_sensor_rovio/pose_sensor/initialize_msf_scale 1.0"/>
     ?>
 
+
+  <?ignore
+    =========================================================
+                    MSF pose correction
+    ========================================================= 
+  ?>
+
+    <node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" />
+    
   <?ignore 
     =========================================================
                         Nonlinear MPC
