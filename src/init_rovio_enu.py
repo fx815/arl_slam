@@ -87,7 +87,7 @@ class InitRovioEnu:
                                                      self.send_reset_to_rovio_service_callback)
 
         # subscribe to Imu topic which contains the yaw orientation
-        rospy.Subscriber(rospy.get_name() + "/mavros/imu/data", Imu, self.mag_imu_callback)
+        rospy.Subscriber(rospy.get_name() + "/mag_imu", Imu, self.mag_imu_callback)
         # use either gps_transform or gps_pose
         rospy.Subscriber(rospy.get_name() + "/gps_transform", TransformStamped, 
                          self.gps_transform_callback)

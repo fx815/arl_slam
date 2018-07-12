@@ -79,7 +79,6 @@
 
     </node>
 
-
   <?ignore
     =========================================================
                         Nonlinear MPC
@@ -98,8 +97,16 @@
       <param name="verbose" value="true" />
       <param name="reference_frame" value="world"/>
 
-	</node>
+   </node>
 
+  <?ignore
+    =========================================================
+                        Trajectory sampler
+    =========================================================
+  ?>   
+    <node name="trajectory_sampler" pkg="mav_trajectory_generation_ros" type="trajectory_sampler_node" output="screen">
+      <param name="publish_whole_trajectory" value="true"/>
+    </node>
 
   <?ignore
     =========================================================
