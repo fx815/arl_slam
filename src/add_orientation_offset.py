@@ -20,7 +20,7 @@ class AddOrientationOffset:
 
         rospy.Subscriber('maplab_rovio/T_G_I', PoseStamped, self.pose_callback)
 
-        self.pub_pose_out = rospy.Publisher('maplab_rovio/T_G_I/Init',PoseStamped, queue_size=10)
+        self.pub_pose_out = rospy.Publisher('maplab_rovio/T_G_I/init',PoseStamped, queue_size=10)
 
         rospy.spin()
 
