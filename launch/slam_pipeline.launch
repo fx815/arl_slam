@@ -16,6 +16,13 @@
 
   <!--node name="maplab_rovio" pkg="arl_slam" type="/brett_run_rovioli_live" /-->
   
+  <?ignore
+    =========================================================
+                  ROVIOLI pose correction
+    ========================================================= 
+  ?>
+
+    <node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" />
 
   <?ignore
     =========================================================
