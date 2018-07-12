@@ -64,9 +64,9 @@ class AddOrientationOffset:
                            msg.pose.orientation.w]
 
             euler_in_rpy = tf.euler_from_quaternion(q_in)
-            roll = euler_init_rpy[0]
-            pitch = euler_init_rpy[1]
-            yaw = euler_init_rpy[2]
+            roll = euler_in_rpy[0]
+            pitch = euler_in_rpy[1]
+            yaw = euler_in_rpy[2]
 
             roll_out = roll + self.roll_offset
             pitch_out = pitch + self.pitch_offset
