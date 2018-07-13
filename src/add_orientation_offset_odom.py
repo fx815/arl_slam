@@ -43,10 +43,10 @@ class AddOrientationOffset:
             q_new = tf.transformations.quaternion_from_euler(roll_out,pitch_out,yaw_out)
 
             pose_out = msg
-            pose_out.pose.pose.orientation.x = q_new[0]
-            pose_out.pose.pose.orientation.y = q_new[1]
-            pose_out.pose.pose.orientation.z = q_new[2]
-            pose_out.pose.pose.orientation.w = q_new[3]
+            pose_out.pose.orientation.x = q_new[0]
+            pose_out.pose.orientation.y = q_new[1]
+            pose_out.pose.orientation.z = q_new[2]
+            pose_out.pose.orientation.w = q_new[3]
 
             """
             transform_pub = tf.TransformBroadcaster()
@@ -60,10 +60,10 @@ class AddOrientationOffset:
             self.pub_pose_out.publish(pose_out) 
 
         else:
-            q_in = [msg.pose.pose.orientation.x,
-                    msg.pose.pose.orientation.y,
-                    msg.pose.pose.orientation.z,
-                    msg.pose.pose.orientation.w]
+            q_in = [msg.pose.orientation.x,
+                    msg.pose.orientation.y,
+                    msg.pose.orientation.z,
+                    msg.pose.orientation.w]
 
             euler_in_rpy = tf.transformations.euler_from_quaternion(q_in)
             roll = euler_in_rpy[0]
@@ -77,10 +77,10 @@ class AddOrientationOffset:
             q_new = tf.transformations.quaternion_from_euler(roll_out,pitch_out,yaw_out)
 
             pose_out = msg
-            pose_out.pose.pose.orientation.x = q_new[0] 
-            pose_out.pose.pose.orientation.y = q_new[1]
-            pose_out.pose.pose.orientation.z = q_new[2]
-            pose_out.pose.pose.orientation.w = q_new[3]
+            pose_out.pose.orientation.x = q_new[0] 
+            pose_out.pose.orientation.y = q_new[1]
+            pose_out.pose.orientation.z = q_new[2]
+            pose_out.pose.orientation.w = q_new[3]
             
             """
             transform_pub = tf.TransformBroadcaster()
