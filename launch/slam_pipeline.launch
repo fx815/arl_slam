@@ -89,7 +89,7 @@
     ========================================================= 
   ?>
 
-    <node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" />
+    <!--node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" /-->
     
   <?ignore 
     =========================================================
