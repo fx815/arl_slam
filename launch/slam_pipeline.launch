@@ -129,11 +129,8 @@
     =========================================================
                         Static Transform
     =========================================================
-  
-
-    <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 1  /world /map 100"/>
-
   ?>
 
+    <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 1  /world /map 100"/>
 
 </launch>
