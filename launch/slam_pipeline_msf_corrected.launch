@@ -122,7 +122,7 @@
       <param name="mav_name" type="string" value="primo" />
       <param name="frame_id" type="string" value="world" />
       <!-- Real -->
-      <remap from="odometry" to="msf_core/odometry/corrected" />
+      <remap from="odometry" to="msf_core/odometry" />
       <!-- Simulation -->
       <!--remap from="odometry" to="ground_truth/odometry" /-->
     </node>
