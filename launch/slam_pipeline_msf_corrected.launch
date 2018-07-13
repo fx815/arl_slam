@@ -82,6 +82,14 @@
     <?ignore
     <node pkg="rosservice" type="rosservice" name="initialize" args="call --wait /pose_sensor_rovio/pose_sensor/initialize_msf_scale 1.0" />
     ?>
+
+  <?ignore
+    =========================================================
+                    MSF pose correction
+    ========================================================= 
+  ?>
+
+    <node pkg="arl_slam" name="add_orientation_offset" type="add_orientation_offset.py" output="screen" />
   
   <?ignore 
     =========================================================
@@ -90,7 +98,7 @@
   ?>    
     <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
     
-      <remap from="odometry" to="msf_core/odometry" />
+      <remap from="odometry" to="msf_core/odometry/corrected" />
       <remap from="rc" to="mavros/rc/in" />
       <remap from="mavros/imu/data" to="output_imu" />
 
@@ -114,7 +122,7 @@
       <param name="mav_name" type="string" value="primo" />
       <param name="frame_id" type="string" value="world" />
       <!-- Real -->
-      <remap from="odometry" to="msf_core/odometry" />
+      <remap from="odometry" to="msf_core/odometry/corrected" />
       <!-- Simulation -->
       <!--remap from="odometry" to="ground_truth/odometry" /-->
     </node>
