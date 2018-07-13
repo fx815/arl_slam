@@ -48,7 +48,7 @@ class AddOrientationOffset:
             pose_out.pose.pose.orientation.z = q_new[2]
             pose_out.pose.pose.orientation.w = q_new[3]
 
-            """
+            
             transform_pub = tf.TransformBroadcaster()
             transform_pub.sendTransform((pose_out.pose.pose.position.x, pose_out.pose.pose.position.y, pose_out.pose.pose.position.z),
                      q_new,
@@ -57,8 +57,6 @@ class AddOrientationOffset:
                      "world")
 
             self.pub_pose_out.publish(pose_out) 
-
-            """
 
         else:
             q_in = [msg.pose.pose.orientation.x,
@@ -82,7 +80,7 @@ class AddOrientationOffset:
             pose_out.pose.pose.orientation.y = q_new[1]
             pose_out.pose.pose.orientation.z = q_new[2]
             pose_out.pose.pose.orientation.w = q_new[3]
-            """
+            
             transform_pub = tf.TransformBroadcaster()
             transform_pub.sendTransform((pose_out.pose.pose.position.x, pose_out.pose.pose.position.y, pose_out.pose.pose.position.z),
                      q_new,
@@ -91,7 +89,7 @@ class AddOrientationOffset:
                      "world")
 
             self.pub_pose_out.publish(pose_out) 
-            """
+        
 
 if __name__ == '__main__':
     rospy.init_node('add_pose_offset')
