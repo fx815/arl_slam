@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 
-#
-#  Title:        add_orientation_offset.py
-#  Description:  ROS module to add a constant offset to incoming IMU messages.
-#                WARNING, use this module ONLY to initialize Rovio with NPOSE=0, as ONLY IMU orientation is processed,
-#                accelerations and gyros are not affected!!!
-#  Convention:   q_out =  q_in * q_offset
-
 import rospy
 from nav_msgs.msg import Odometry
 import tf
@@ -39,15 +32,15 @@ class AddOrientationOffset:
             roll = euler_init_rpy[0]
             pitch = euler_init_rpy[1]
             yaw = euler_init_rpy[2]
-            self.roll_offset = -roll
-            self.pitch_offset = -pitch
+            #self.roll_offset = -roll
+            #self.pitch_offset = -pitch
             self.yaw_offset = -yaw
 
-            roll_out = roll + self.roll_offset
-            pitch_out = pitch + self.pitch_offset
+            #roll_out = roll + self.roll_offset
+            #pitch_out = pitch + self.pitch_offset
             yaw_out = yaw + self.yaw_offset
 
-            q_new = tf.transformations.quaternion_from_euler(roll_out,pitch_out,yaw_out)
+            q_new = tf.transformations.quaternion_from_euler(roll,pitch,yaw_out)
 
             pose_out = msg
             pose_out.pose.pose.orientation.x = q_new[0]
@@ -75,14 +68,14 @@ class AddOrientationOffset:
             pitch = euler_in_rpy[1]
             yaw = euler_in_rpy[2]
 
-            roll_out = roll + self.roll_offset
-            pitch_out = pitch + self.pitch_offset
+            #roll_out = roll + self.roll_offset
+            #pitch_out = pitch + self.pitch_offset
             yaw_out = yaw + self.yaw_offset
 
-            q_new = tf.transformations.quaternion_from_euler(roll_out,pitch_out,yaw_out)
+            q_new = tf.transformations.quaternion_from_euler(roll,pitch,yaw_out)
 
             pose_out = msg
-            pose_out.pose.pose.orientation.x = q_new[0]
+            pose_out.pose.pose.orientation.x = q_new[0] 
             pose_out.pose.pose.orientation.y = q_new[1]
             pose_out.pose.pose.orientation.z = q_new[2]
             pose_out.pose.pose.orientation.w = q_new[3]
