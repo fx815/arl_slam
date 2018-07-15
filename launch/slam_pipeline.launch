@@ -78,8 +78,10 @@
 
     </node>
 
+  <?ignore
     <!-- init MSF -->
     <node pkg="rosservice" type="rosservice" name="initialize" args="call --wait /pose_sensor_rovio/pose_sensor/initialize_msf_scale 1.0" />
+  ?>
   
   <?ignore 
     =========================================================
