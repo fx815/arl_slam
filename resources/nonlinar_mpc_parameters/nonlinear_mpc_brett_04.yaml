@@ -11,7 +11,7 @@
 #==================================================================================================================
 
 ## Controller Parameters:
-mass: 1.768 #kg
+mass: 1.760 #kg
 roll_time_constant: 0.137 #sysid from vicon
 roll_gain: 1.080 #sysid from vicon
 pitch_time_constant: 0.147 #sysid from vicon
