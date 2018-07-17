@@ -67,7 +67,7 @@
 
       <!-- msf parameters -->
 
-      <rosparam file="$(find arl_slam)/resources/msf_parameters/viconpos_sensor_fix_brett.yaml"/>
+      <rosparam file="$(find arl_slam)/resources/msf_parameters/viconpos_sensor_fix.yaml"/>
 
     </node>
     
