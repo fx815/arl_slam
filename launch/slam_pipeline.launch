@@ -91,7 +91,7 @@
     
       <remap from="odometry" to="msf_core/odometry" />
       <remap from="rc" to="mavros/rc/in" />
-      <!--remap from="mavros/imu/data" to="output_imu" /-->
+      <remap from="mavros/imu/data" to="output_imu" />
 
       <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_04.yaml" />
       <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_04.yaml"/>
