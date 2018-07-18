@@ -13,13 +13,21 @@
 /pose_sensor_rovio/pose_sensor/pose_noise_q_wv: 0.0
 /pose_sensor_rovio/pose_sensor/pose_noise_q_ic: 0.0
 /pose_sensor_rovio/pose_sensor/pose_noise_p_ic: 0.0
+
 /pose_sensor_rovio/pose_sensor/pose_delay: -0.0188218802704
 
-/pose_sensor_rovio/pose_sensor/pose_noise_meas_p: 0.002
-/pose_sensor_rovio/pose_sensor/pose_noise_meas_q: 0.005
+#/pose_sensor_rovio/pose_sensor/pose_noise_meas_p: 0.002
+#/pose_sensor_rovio/pose_sensor/pose_noise_meas_q: 0.005
 
-#/pose_sensor_rovio/pose_sensor/pose_noise_meas_p: 0.01
-#/pose_sensor_rovio/pose_sensor/pose_noise_meas_q: 0.025
+#0.001(stable wiggly) 
+#0.0004(wiggly) 
+#0.1(big z) 
+#0.02 
+#0.01
+#0.0015(reasonable wiggle)
+#0.0025(wiggle free, big z)
+/pose_sensor_rovio/pose_sensor/pose_noise_meas_p: 0.0015
+/pose_sensor_rovio/pose_sensor/pose_noise_meas_q: 0.01 #0.001(quick wiggle, good z) #0.1(yaw problem w/ quick wiggle) #0.05(little wiggle) #0.005 #0.025
 
 /pose_sensor_rovio/pose_sensor/init/q_ic/x: 0.62035007271
 /pose_sensor_rovio/pose_sensor/init/q_ic/y: 0.613169181942
