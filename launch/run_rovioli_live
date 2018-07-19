@@ -2,7 +2,7 @@
 # Usage: brett_run_rovioli_live <output save folder> [<additional rovioli flags>]
 
 LOCALIZATION_MAP_OUTPUT=$1
-NCAMERA_CALIBRATION="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/ncamera-2018-05-11-15-05-18.yaml"
+NCAMERA_CALIBRATION="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/ncamera-2018-07-19-10-58-17_pixhawk4.yaml" #ncamera-2018-05-11-15-05-18.yaml
 IMU_PARAMETERS_MAPLAB="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/imu-zr300-maplab.yaml"
 IMU_PARAMETERS_ROVIO="/home/arl/maplab_ws/src/arl_slam/resources/zr300_calibration/imu-zr300-rovio.yaml"
 REST=$@
