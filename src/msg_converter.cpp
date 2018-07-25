@@ -18,7 +18,8 @@ void MsgConverter::MsgConverterCallback(const geometry_msgs::PoseStamped::ConstP
     transStamp.transform.rotation.y = poseStamp->pose.orientation.y;
     transStamp.transform.rotation.z = poseStamp->pose.orientation.z;
     transStamp.transform.rotation.w = poseStamp->pose.orientation.w;
-    transStamp.header = poseStamp->header;
+    //transStamp.header = poseStamp->header;
+    transStamp.header.stamp = ros::Time::now();
     //transStamp.child_frame_id = "imu";
 
     transform_stamped_publisher_.publish(transStamp);
