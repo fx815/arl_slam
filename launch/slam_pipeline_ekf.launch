@@ -30,7 +30,7 @@
 		<!--arg name="respawn_mavros" default="$(arg respawn_mavros)" /-->
 
     <!--inputs to mavros-->
-    <remap from="/mavros/vision_pose/pose" to="vision_pose_out" />
+    <!--remap from="/mavros/vision_pose/pose" to="vision_pose_out" /-->
 
 	</include>
 
@@ -50,7 +50,7 @@
 
   <node name="msg_converter_node" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen">
     <!--inputs to msg_converter-->
-    <remap from="transform_in" to="brett2/vrpn_client/raw_transform" />
+    <remap from="transform_in" to="/brett2/vrpn_client/raw_transform" />
 
   </node>
 
@@ -64,7 +64,7 @@
   <node name="rotate_vision_pose_node" pkg="arl_slam" type="rotate_vision_pose" clear_params="true" output="screen">
 
     <!--inputs to rotate_vision_pose-->
-    <remap from="vision_pose_in" to="pose_out" />
+    <!--remap from="vision_pose_in" to="pose_out" /-->
 
   </node>
 
@@ -75,7 +75,7 @@
   ?>    
     <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
     
-      <remap from="odometry" to="msf_core/odometry" />
+      <remap from="odometry" to="mavros/local_position/odom" />
       <remap from="rc" to="mavros/rc/in" />
       <!--remap from="mavros/imu/data" to="output_imu" /-->
 
