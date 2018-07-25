@@ -28,10 +28,6 @@
 		<arg name="log_output" value="$(arg log_output)" />
 		<!--arg name="fcu_protocol" value="$(arg fcu_protocol)" /-->
 		<!--arg name="respawn_mavros" default="$(arg respawn_mavros)" /-->
-
-    <!--inputs to mavros-->
-    <remap from="/mavros/vision_pose/pose" to="pose_out" /-->
-
 	</include>
 
   <?ignore
@@ -48,9 +44,11 @@
     =========================================================
   ?>
 
-  <node name="msg_converter_node" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen">
+  <node name="msg_converter_inv_node" pkg="arl_slam" type="msg_converter_inv_node" clear_params="true" output="screen">
     <!--inputs to msg_converter-->
     <remap from="transform_in" to="/brett2/vrpn_client/raw_transform" />
+    <!--output to mavors-->
+    <remap from="pose_out" to="mavros/vision_pose/pose" />
 
   </node>
 
@@ -64,7 +62,7 @@
   <node name="rotate_vision_pose_node" pkg="arl_slam" type="rotate_vision_pose" clear_params="true" output="screen">
 
     <!--inputs to rotate_vision_pose-->
-    <!--remap from="vision_pose_in" to="pose_out" /-->
+    <remap from="vision_pose_in" to="pose_out" />
 
   </node>
   ?>
