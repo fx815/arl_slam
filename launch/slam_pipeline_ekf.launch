@@ -48,7 +48,7 @@
     =========================================================
   ?>
 
-  <node name="msg_converter" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen">
+  <node name="msg_converter_node" pkg="arl_slam" type="msg_converter" clear_params="true" output="screen">
     <!--inputs to msg_converter-->
     <remap from="transform_in" to="brett2/vrpn_client/raw_transform" />
 
@@ -61,7 +61,7 @@
     =========================================================
   ?>
 
-  <node name="rotate_vision_pose" pkg="arl_slam" type="rotate_vision_pose" clear_params="true" output="screen">
+  <node name="rotate_vision_pose_node" pkg="arl_slam" type="rotate_vision_pose" clear_params="true" output="screen">
 
     <!--inputs to rotate_vision_pose-->
     <remap from="vision_pose_in" to="pose_out" />
