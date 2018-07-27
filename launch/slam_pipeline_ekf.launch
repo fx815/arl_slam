@@ -1,10 +1,17 @@
 	<launch>
+  <?ignore
+    =========================================================
+                        RealSense
+    =========================================================
+  ?> 
+
+  <include file="$(find maplab_realsense)/launch/maplab_realsense.launch" />
 
   <?ignore
     =========================================================
                         MavRos
     =========================================================
-  ?> 
+  ?>
 	<!-- vim: set ft=xml noet : -->
 	<!-- example launch script for PX4 based FCU's -->
 
@@ -30,26 +37,7 @@
 		<!--arg name="respawn_mavros" default="$(arg respawn_mavros)" /-->
 	</include>
 
-  <?ignore
-    =========================================================
-                           Vicon
-    =========================================================
-  ?>  
-
-    <include file="$(find ros_vrpn_client)/launch/asl_vicon.launch" />
-
-  <?ignore
-    =========================================================
-                     msg_converter_inv
-    =========================================================
-  ?>
-
-  <node name="msg_converter_node" pkg="arl_slam" type="msg_converter_node" clear_params="true" output="screen">
-    <!--inputs to msg_converter-->
-    <remap from="transform_in" to="/brett2/vrpn_client/raw_transform" />
-    
-  </node>
-
+  
 
   <?ignore
     =========================================================
@@ -60,7 +48,7 @@
   <node name="rotate_vision_pose_node" pkg="arl_slam" type="rotate_vision_pose_node" clear_params="true" output="screen">
 
     <!--inputs to rotate_vision_pose-->
-    <!--remap from="vision_pose_in" to="pose_out" /-->
+    <remap from="vision_pose_in" to="maplab_rovio/T_G_I" />
     <!--output to mavors-->
     <remap from="vision_pose_out" to="mavros/vision_pose/pose" />
 
@@ -70,7 +58,7 @@
     =========================================================
                         Nonlinear MPC
     =========================================================
-  ?>    
+  ?>
     <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
     
       <remap from="odometry" to="mavros/local_position/odom" />
