@@ -14,10 +14,10 @@ void RotatePose::RotatePoseCallback(const geometry_msgs::PoseStamped::ConstPtr &
 
 	//drift of vision w.r.t world
 	//q_wv_.setIdentity();
-	q_wv_.w() = 0.701; //0.696;
-    q_wv_.x() = 0.092; //0.123;
-    q_wv_.y() = 0.092; //-0.123;
-    q_wv_.z() = -0.701; //0.696;
+	q_wv_.w() = 0.707; //0.696;
+    q_wv_.x() = 0.0;//0.092; //0.123;
+    q_wv_.y() = 0.0;//0.092; //-0.123;
+    q_wv_.z() = -0.707; //0.696;
 	p_wv_.setZero();
 
 	//rotation of imu w.r.t camera, from kalibr
