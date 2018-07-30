@@ -2,9 +2,11 @@
 #define PID_CONTROLLER_H
 
 #include <ros/ros.h>
-//#include <nav_msgs/Odometry.h>
-#include <geometry_msgs/PoseStamped.h>
-#include <trajectory_msgs/MultiDOFJointTrajectory.h>
+#include <nav_msgs/Odometry.h>
+//#include <geometry_msgs/PoseStamped.h>
+#include <custom_trajectory_message>
+
+#include <nav_msgs/Odometry.h>
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
@@ -15,6 +17,7 @@ class pidControl{
 	private:
 		ros::NodeHandle nh_;
 		ros::Subscriber odom_subscriber_;
+		ros::Subscriber trajectory_subscriber_;
 		ros::Publisher command_publisher_;
 		nav_msgs::Odometry odom_in_;
 		//Eigen::Matrix<double, 3, 1> 
