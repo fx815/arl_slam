@@ -1,0 +1,129 @@
+	<launch>
+  <?ignore
+    =========================================================
+                        RealSense
+    =========================================================
+  ?> 
+
+  <include file="$(find maplab_realsense)/launch/maplab_realsense.launch" />
+
+  <?ignore
+  =========================================================
+                        tag_detection
+  =========================================================
+  ?>
+  <arg name="marker_size" default="4.5" />
+  <arg name="max_new_marker_error" default="0.08" />
+  <arg name="max_track_error" default="0.2" />
+  <arg name="cam_image_topic" default="/zr300_node/fisheye/image_raw" />
+  <arg name="cam_info_topic" default="/zr300_node/fisheye/camera_info" />
+  <arg name="output_frame" default="/world" />
+
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
+    <param name="marker_size"           type="double" value="$(arg marker_size)" />
+    <param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
+    <param name="max_track_error"       type="double" value="$(arg max_track_error)" />
+    <param name="output_frame"          type="string" value="$(arg output_frame)" />
+
+    <remap from="camera_image"  to="$(arg cam_image_topic)" />
+    <remap from="camera_info"   to="$(arg cam_info_topic)" />
+  </node>
+
+  <?ignore
+    =========================================================
+                        MavRos
+    =========================================================
+  ?>
+	<!-- vim: set ft=xml noet : -->
+	<!-- example launch script for PX4 based FCU's -->
+
+	<arg name="fcu_url" default="/dev/ttyACM0:921600" />
+	<arg name="gcs_url" default="" />
+	<arg name="tgt_system" default="1" />
+	<arg name="tgt_component" default="1" />
+	<arg name="log_output" default="screen" />
+	<!--arg name="fcu_protocol" default="v2.0" /-->
+	<!--arg name="respawn_mavros" default="false" /-->
+
+	<include file="$(find mavros)/launch/node.launch">
+
+		<arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
+		<arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
+
+		<arg name="fcu_url" value="$(arg fcu_url)" />
+		<arg name="gcs_url" value="$(arg gcs_url)" />
+		<arg name="tgt_system" value="$(arg tgt_system)" />
+		<arg name="tgt_component" value="$(arg tgt_component)" />
+		<arg name="log_output" value="$(arg log_output)" />
+		<!--arg name="fcu_protocol" value="$(arg fcu_protocol)" /-->
+		<!--arg name="respawn_mavros" default="$(arg respawn_mavros)" /-->
+	</include>
+
+  <?ignore
+    =========================================================
+                    rotate_vision_pose
+    =========================================================
+  ?>
+
+  <node name="rotate_vision_pose_node" pkg="arl_slam" type="rotate_vision_pose_node" clear_params="true" output="screen">
+
+    <!--inputs to rotate_vision_pose-->
+    <remap from="vision_pose_in" to="maplab_rovio/T_G_I" />
+    <!--output to mavors-->
+    <remap from="vision_pose_out" to="mavros/vision_pose/pose" />
+
+  </node>
+
+  <?ignore
+    =========================================================
+                        Nonlinear MPC
+    =========================================================
+  ?>
+    <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
+    
+      <remap from="odometry" to="mavros/local_position/odom" />
+      <remap from="rc" to="mavros/rc/in" />
+      <!--remap from="mavros/imu/data" to="output_imu" /-->
+
+      <rosparam file="$(find arl_slam)/resources/nonlinar_mpc_parameters/nonlinear_mpc_brett_04.yaml" />
+      <rosparam file="$(find arl_slam)/resources/disturbance_observer_parameters/disturbance_observer_brett_04.yaml"/>
+      <param name="use_rc_teleop" value="true"/>
+      <param name="autopilot_interface" value="mavros" />
+      <param name="verbose" value="true" />
+      <param name="reference_frame" value="world"/>
+
+	</node>
+
+  <?ignore
+    =========================================================
+                       Waypoint_navigator
+    =========================================================
+  ?>
+
+    <node name="waypoint_navigator_node" pkg="waypoint_navigator" type="waypoint_navigator_node"  respawn="true" clear_params="true" output="screen">
+      <rosparam file="$(find waypoint_navigator)/paths/trajectory_simple_enu.yaml"/>
+      <param name="mav_name" type="string" value="primo" />
+      <param name="frame_id" type="string" value="world" />
+      <!-- Real -->
+      <remap from="odometry" to="msf_core/odometry" />
+      <!-- Simulation -->
+      <!--remap from="odometry" to="ground_truth/odometry" /-->
+    </node>
+
+  <?ignore
+    =========================================================
+                        Trajectory_sampler
+    =========================================================
+  ?>   
+
+    <node name="trajectory_sampler" pkg="mav_trajectory_generation_ros" type="trajectory_sampler_node" output="screen" />
+
+  <?ignore
+    =========================================================
+                        Static Transform
+    =========================================================
+  ?>
+
+    <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 1  /world /map 100"/>
+
+</launch>
