@@ -85,7 +85,7 @@
       <param name="mav_name" type="string" value="primo" />
       <param name="frame_id" type="string" value="world" />
       <!-- Real -->
-      <remap from="odometry" to="msf_core/odometry" />
+      <remap from="odometry" to="/mavros/local_position/odom" />
       <!-- Simulation -->
       <!--remap from="odometry" to="ground_truth/odometry" /-->
     </node>
